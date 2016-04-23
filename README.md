@@ -105,6 +105,7 @@ sudo rm /etc/localtime
 
 ###Switch back to laptop/pc/mac OR stay on pi
 
+- Logout as root and log back in as your username@ipadress
 - Check time 
 ```
 timedatectl
