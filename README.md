@@ -81,7 +81,7 @@ PermitRootLogin yes
 ```
 sudo reboot
 ```
-- Now you can ssh using root by (Replace IP with your own:
+- Now you can ssh using root by (Replace IP with your own):
 ```
 ssh root@192.168.2.1
 ```
@@ -98,7 +98,7 @@ RootDir = /
 
 ###Switch back to pi
 
-- Enter
+- Put in the following AS ROOT USER ON PI (can't be done over SSH)
 ```
 sudo rm /etc/localtime
 ```
@@ -129,14 +129,14 @@ timedatectl set-ntp true
 ```
 sudo nano /etc/vconsole.conf
 ```
-- enter this line if UK if not refer to arch linux website - https://wiki.archlinux.org/index.php/Keyboard_configuration_in_console: 
+- enter this line if you're based in UK, if not refer to arch linux website - https://wiki.archlinux.org/index.php/Keyboard_configuration_in_console: 
 ```
 KEYMAP=uk
 ```
 
 ###Switch back to pi
 
-- Change Pi name from Alarmpi to for e.g. pi (edit the name you see listed by deleting for i.e. Alarm part of Alarmpi)
+- Change Pi name from "Alarmpi" to for e.g. "pi" (edit the name you see listed by deleting for i.e. Alarm part of Alarmpi)
 ```
 sudo nano /etc/hostname 
 ```
@@ -159,19 +159,29 @@ i.e.
 
 # End of file
 ```
-- Create Pacman Key (Do this on both Pi directly AND laptop if you want to follow me... pacman init keys are important else things will not install properly).. if not doing with ssh and Pi refer to https://hreikin.wordpress.com/2014/04/27/arch-linux-raspberry-pi-install-guide-updated/ NB pacman-key --init has 2x "-"
+- Create Pacman Key (Do this on both Pi directly AND laptop if you want to follow me... pacman init keys are important else things will not install properly).. if not doing with ssh and Pi combo then refer to https://hreikin.wordpress.com/2014/04/27/arch-linux-raspberry-pi-install-guide-updated/ NB pacman-key --init has 2x "-"
 ```
 sudo pacman-key –-init
 ```
-- In another window on laptop/pc/mac OR if you can create another window on Pi (my usb remote keyboard does not have FN keys to open new terminal window so I had to use combination).. do this a few times to play safe.. trying to sync the 
+- In another window on laptop/pc/mac OR if you can create another terminal on Pi (my usb remote keyboard does not have FN keys to open new terminal window so I had to use my mac as well as pi).. do this a few times to play safe.. what you want to do is trigger the init command and quickly launch the below command which will generate lots of random text to help with key genereation: 
 ```
 ls -R / && ls -R / && ls -R /
 ```
-Update system and packages (CHANGE MIRRORS comment out main mirror and choose manually i.e. france and netherlands using: sudo nano /etc/pacman.d/mirrorlist => comment out => #Server = http://mirror.archlinuxarm.org/$arch/$repo => and remove # from i.e. france and netherlands servers => save => I found these servers much quicker)
+- Update system and packages 
+- CHANGE MIRRORS: comment out main mirror and choose manually i.e. france and netherlands using: 
+```
+sudo nano /etc/pacman.d/mirrorlist 
+```
+- comment out main mirror (add # in front of):
+```
+#Server = http://mirror.archlinuxarm.org/$arch/$repo
+```
+- and remove # from in front of i.e. france and netherlands servers or whatever is closest.  You may have to trial and error here but I found the main mirror quite slow when compared to selecting other ones in nearby countries
+- Update your system:
 ```
 sudo pacman -Syu
 ```
-- reboot system
+- reboot system:
 ```
 sudo reboot
 ```
@@ -280,7 +290,7 @@ Change line:
 ```
 change gpu_mem=256 (or 128)
 ```
-- EITHER: If you didn't skip destop GUI installation
+- EITHER: If you didn't skip destop environment installation
 ```
 sudo pacman -S omxplayer-git
 ```
