@@ -32,13 +32,13 @@ Once Pinn-lite files copied to SD, safely remove sd card and pop into Pi.  When 
 passwd
 ```
 
-###SETUP WIFI
+###Setup Wifi Raspbery Pi3
 
-- To access wifi:
+- To choose/setup wifi:
 ```
 wifi-menu
 ```
-- To generate a profile (must do as root) to use each time you boot: 
+- To generate a profile (must do as root) to automatically use each time you boot: 
 ```
 wifi-menu -o
 ```
