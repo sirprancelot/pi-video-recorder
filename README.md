@@ -217,7 +217,7 @@ sudo reboot
 
 ###Install Core Files & Desktop Environment
 
-- Install Core files as well as desktop environment
+- Install Core files
 ```
 sudo pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins xf86-video-fbdev
 ```
