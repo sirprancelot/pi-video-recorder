@@ -31,7 +31,35 @@ Once Pinn-lite files copied to SD, safely remove sd card and pop into Pi.  When 
 ```
 passwd
 ```
+
+###SETUP WIFI
+
+- To access wifi:
+```
+wifi-menu
+```
+- To generate a profile (must do as root) to use each time you boot: 
+```
+wifi-menu -o
+```
+- Your wifi profile is stored in /etc/netctl: e.g. mine is wlan0-HappyHippo
+- to view wifi file name so you can boot from start:
+```
+cd /etc/netctl
+ls
+```
+- then view what the file is in there.. prob wlan0-yournetworkname
+- to enable wifi to always start from boot: 
+```
+netctl enable wlan0-yournetworkname
+```
+###Configure the basics
+
 - Install sudo:
+```
+pacman -S sudo
+```
+- Update your pi
 ```
 pacman -S sudo
 ```
@@ -423,25 +451,6 @@ systemctl start kodi
 systemctl enable kodi
 ```
 - Reboot and you're done
-  
-
-###SETUP WIFI
-
-- Wifi: to generate profile (must do as root): 
-```
-wifi-menu -o
-```
-- Wifi profile is stored in /etc/netctl: e.g. mine is wlan0-HappyHippo
-- to view wifi file name so you can boot from start:
-```
-cd /etc/netctl
-ls
-```
-- then view what the file is in there.. prob wlan0-yournetworkname
-- to enable wifi from boot i.e.: 
-```
-netctl enable wlan0-yournetworkname
-```
 
 ###SOUND
 
