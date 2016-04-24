@@ -528,10 +528,11 @@ sudo pacman -Syu
 yaourt -Syua
 ```
 ###Finish off a few more procedures
-- copy and rename /usr/share/gnupg/gpg-conf.skel => create folder /home/yourusername/.gnupg and rename gpg-conf.skel as gpg.conf
+- copy and rename /usr/share/gnupg/gpg-conf.skel => create folder /home/yourusername/.gnupg and rename gpg-conf.skel as gpg.conf (REPLACE YOURUSERNAME)
 ```
 mkdir -p /home/yourusername/.gnupg
 cp /usr/share/gnupg/gpg-conf.skel /home/yourusername/.gnupg/gpg-conf.skel
+cd /home/yourusername/.gnupg/ 
 mv gpg-conf.skel gpg.conf
 ```
 - edit the folow:
