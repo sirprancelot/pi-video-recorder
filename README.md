@@ -88,7 +88,7 @@ passwd yourusername
 ```
 logout
 ```
-- Test your new login details by sigining in
+- Test your new login details by signing in
 
 ###Switch to laptop/PC/mac (you don't have to but its a lot easier/faster for some of next steps)
 
