@@ -13,6 +13,7 @@ Here are links to what I bought:
 * Charger https://www.amazon.co.uk/gp/product/B01CCR5P8U/ref=oh_aui_detailpage_o02_s00?ie=UTF8&psc=1
 * Samsung 32gb Evo Pro Plus https://www.amazon.co.uk/gp/product/B00WIMC5C4/ref=oh_aui_detailpage_o01_s00?ie=UTF8&psc=1  
 * FLIRC case https://thepihut.com/products/flirc-raspberry-pi-3-b-case
+* Rii Remote with keyboard (there's prob better but I had this left over and lying around and it does the job fine) - https://www.amazon.co.uk/i25-Function-Controller-Rechargable-Raspberry/dp/B00INITM1E/ref=sr_1_1?ie=UTF8&qid=1461468936&sr=8-1&keywords=rii+remote
 
 ## Let's begin!
 
