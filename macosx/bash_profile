@@ -1,7 +1,0 @@
-if [ -d "$HOME/git/kodi-playercorefactory/bash-scripts-macosx" ] ; then
-        PATH="$HOME/git/kodi-playercorefactory/bash-scripts-macosx:$PATH"
-fi
-
-if [ -d "$HOME/bin" ] ; then
-        PATH="$HOME/bin:$PATH"
-fi
