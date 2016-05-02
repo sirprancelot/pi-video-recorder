@@ -30,7 +30,11 @@ cd ~
 ```
 - Then grab a copy of ffmpeg on github (Will download to home folder)
 ```
-sudo git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+sudo git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg 
+```
+if above doesn't work try:
+```
+sudo git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
 ```
 - Then move into ffmpeg directory
 ```
