@@ -453,6 +453,11 @@ systemctl enable kodi
 ```
 - Reboot and you're done
 
+###KODI Settings to be aware of
+
+- If time is off in Kodi you need to goto => appearance => international => set timezone!!!!
+- To prevent stuttering in videos you need to goto => System => video => settings level advanced => Playback => set adjust display refresh rate to "always" => this fixes stuttering issues
+
 ###SOUND
 
 - Edit:
@@ -517,7 +522,7 @@ amixer -D set PCM 1+ toggle
 
 - should be fixed.  If in event of mucking up sound.  Uninstall all alsa and pulse except alsa lib.  Re-install again and defaults will be back.
 
-##NAPOLOEN WILSON RECORDING
+##SETTIING UP PI-VIDEO-RECORDER (NAPOLOEN WILSON RECORDING)
 
 - install tools:
 ```
@@ -666,6 +671,41 @@ ffmpeg -version
 ```
 ffmpeg -y -threads 0 -i enteryoururlhere -map 0 -acodec copy -vcodec copy /home/yourusername/Desktop/test.mkv 
 ```
+###Setup Pi-Video-Recorder.git
+
+- if not already there make git folder:
+```
+mkdir -p ~/git
+```
+- Cd into it
+```
+cd ~/git
+```
+- Clone pi-video-recorder
+```
+git clone https://github.com/sirprancelot/pi-video-recorder.git
+```
+- copy player config to kodi
+```
+cp  ~/git/pi-video-recorder/playercorefactory.xml ~/.kodi/userdata/playercorefactory.xml
+```
+- To pull latest git
+```
+git pull
+```
+- setup bash scripts
+```
+sudo nano ~/.bashrc
+```
+- Add this to file (change username to yours i.e. sirprancelot):
+```
+export PATH=${PATH}:/home/sirprancelot/git/pi-video-recorder/Scheduler:/home/sirprancelot/git/pi-video-recorder/bash-scripts
+```
+- source your ~/.bashrc to pick up the scripts
+```
+. ~/.bashrc
+```
+
 ###Scheduling with AT command
 
 - Install At Command and enable it from boot
@@ -732,6 +772,8 @@ sudo systemctl enable vsftpd.service
 
 i.e. 192.168.2.1 user=root pass=yourpassword
 
+- To be able to see all hidden files in Filezilla goto main menu > Server > Force Showing Hidden Files
+
 ###SAMBA
 
 - Install the package with pacman.
@@ -796,9 +838,6 @@ Then save... job done!
 ```
 sudo unmount /home/username/mount
 ```
-###TIME SYNC IN KODI
-
-- For XBMC go into appearance > international > set timezone!!!!
 
 ###MOUNTING A USB DEVICE
 
@@ -899,5 +938,51 @@ udiskie-umount -a
 udiskie-mount -a
 ```
 
+### Playing Flash & HTML5 Content in a browser
+
+######INSTALLING CHROMIUM
+
+- Current Chromium via Pacman is not working!!! After much headache I realised this.  The best working version is:
+```
+http://www.mediafire.com/download/8408b401atf563c/chromium-49.0.2623.112-1-armv7h.pkg.tar.xz
+```
+- This is from: https://archlinuxarm.org/forum/viewtopic.php?f=60&t=9109&start=40
+
+- To install download this file to your home root and use follwing command:
+```
+sudo pacman -U chromium-49.0.2623.112-1-armv7h.pkg.tar.xz
+```
+INSTALLING FLASH
+
+- Download from the following location:
+
+http://dl.free.fr/qVkzvqSiB
+
+This is from: https://ubuntu-mate.community/t/tutorial-flash-player-for-chromium-and-firefox/3598
+
+- Copy across to Pi and Untar the file in the root of your home directory (i.e. /home/sirprancelot/)
+
+tar Jxvf pepper-flash-v20.0.0.228-r1.tar.xz
+
+- Then do the following commands:
+
+cd pepper-flash
+sudo mkdir /usr/lib/PepperFlash
+sudo cp * /usr/lib/PepperFlash
+
+- Edit/create Chromium Flags file 
+
+sudo nano .config/chromium-flags.conf
+
+- Add useragent and flash
+
+--user-agent="Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11"
+--user-agent="Chrome/28.0.1500.71"
+--user-agent="Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36"
+--ppapi-flash-path=/usr/lib/PepperFlash/libpepflashplayer.so --ppapi-flash-version=20.0.0.228-r1
+
+PROBLEM WITH RESIZE IN MATE
+
+- Not good for Web... only way would be overclocking https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=139138 and here is a thread that discusses how to improve.  I wouldn't personally use VLC, MPV or watch video in browser on Pi.  I have amazon fire stick for all of that PLUS to be honest I would use Kodi over VLC or MPV as it works flawlessly.  For catchup tv not found via Kodi or Amazon, netflix etc... I would just use Amazon Fire Stick or Roku or other.
 
 
