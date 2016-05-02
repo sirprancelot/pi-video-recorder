@@ -466,6 +466,57 @@ amixer cset numid=3 2
 ```
 - Reboot
 
+- INstall pulse audio:
+```
+sudo pacman -S pulseaudio
+```
+- Unmute mixer and set to 0 DB
+```
+alsamixer
+```
+- Check it's working:
+```
+aplay -l
+speaker-test -c 2
+```
+- Also a fix for mute problem in mate and elsewhere:
+```
+sudo nano /etc/pulse/default.pa
+```
+- comment out line "module-default-device-restore":
+```
+#module-default-device-restore
+```
+- Reboot after doing this fix
+
+- Check amixer and make sure its not still muted
+```
+amixer
+```
+- if still muted reset using alsamixer again setting the levels to 0db
+
+- reboot again
+
+- check amixer
+```
+amixer
+```
+*DO NOT USE BELOW IF SOUND IS WORKING BY THS STAGE.  If still not working use either (I did these and can't remember if neccess to fix problem so leave until the v end after rebooting sufficiently before attempting and only use if you're still getting mute issue.. don't use if it's all working by this stage... move onto time sync in Kodi):*
+```
+amixer set PCM 1+
+```
+- check amixer unmuted or 
+```
+amixer set PCM 1+ toggle
+```
+- check amixer is unmuted or 
+```
+amixer -D set PCM 1+ toggle
+```
+- reboot again
+
+- should be fixed.  If in event of mucking up sound.  Uninstall all alsa and pulse except alsa lib.  Re-install again and defaults will be back.
+
 ##NAPOLOEN WILSON RECORDING
 
 - install tools:
@@ -578,6 +629,10 @@ cd ~
 - Then grab a copy of ffmpeg on github (Will download to home folder)
 ```
 sudo git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+```
+if above doesn't work try:
+```
+sudo git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
 ```
 - Then move into ffmpeg directory
 ```
@@ -747,24 +802,102 @@ sudo unmount /home/username/mount
 
 ###MOUNTING A USB DEVICE
 
-- either boot up into Desktop Environment or from headless mode isse these two commands:
-```
-ls -l /dev/disk/by-uuid/ (find uuid of device norm sda1 etc)
-sudo mkdir /mnt/usbdevice (make a directory to mount from)
-```
-- To have it load up from boot:
-```
-sudo nano /etc/fstab (Add line below replacing folder and UUID)
-```
-- Then add
-```
-UUID=Yours /mnt/usbdevice vfat user,noauto,noatime,flush 0 0
-```
-- to mount usb device:
-```
-mount /mnt/usbdevice
-```
+- *EASY WAY*:  Boot up into Mate environment- If USB not visible... unplug and replug in to see it connected properly
 
+- For headless mode and so USB will show up in Kodi when autostarted install udiskie:
+```
+sudo pacman -S udiskie
+```
+- Next add we need to edit ~/.xinitrc:
+```
+sudo nano ~/.xinitrc
+```
+- Add this line at the top above # Executed by startx (run your window manager from here) text
+```
+udiskie &
+```
+- Save and exit Nano
+
+- Next we need to add some new rules... create file:
+```
+sudo nano /etc/polkit-1/rules.d/50-udiskie.rules
+```
+- Copy in this text and save:
+```
+polkit.addRule(function(action, subject) {
+  var YES = polkit.Result.YES;
+  // NOTE: there must be a comma at the end of each line except for the last:
+  var permission = {
+    // required for udisks1:
+    "org.freedesktop.udisks.filesystem-mount": YES,
+    "org.freedesktop.udisks.luks-unlock": YES,
+    "org.freedesktop.udisks.drive-eject": YES,
+    "org.freedesktop.udisks.drive-detach": YES,
+    // required for udisks2:
+    "org.freedesktop.udisks2.filesystem-mount": YES,
+    "org.freedesktop.udisks2.encrypted-unlock": YES,
+    "org.freedesktop.udisks2.eject-media": YES,
+    "org.freedesktop.udisks2.power-off-drive": YES,
+    // required for udisks2 if using udiskie from another seat (e.g. systemd):
+    "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+    "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+    "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+    "org.freedesktop.udisks2.eject-media-other-seat": YES,
+    "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+  };
+  if (subject.isInGroup("storage")) {
+    return permission[action.id];
+  }
+});
+```
+- Next we need to create a systemd .service file:
+```
+sudo nano /etc/systemd/system/udiskie.service
+```
+- Copy in the following replacing username with your own:
+```
+[Unit]
+Description=handle automounting
+
+[Service]
+User=sirprancelot
+ExecStart=/usr/bin/udiskie
+Restart=always
+
+[Install]
+WantedBy = multi-user.target
+```
+- Save and exit
+
+- Now let's enable this to start on boot
+```
+sudo systemctl enable udiskie.service
+```
+- Reboot your device and test it out!  If auto starting into Kodi if your USB device is already plugged in you should be able to see it listed under Video > files in kodi and be able to select the device and view contents.  If you want to view contents in terminal you'll need to find the location which is (replace with your username where appropraite):
+```
+cd /run/media/sirprancelot/
+```
+- You should now be able to see contents.  Let's make this a bit easier though and add a Media folder in our home:
+```
+cd
+mkdir Media
+```
+- Now let's symlink from /run/media/sirprancelot to our home folder (replace username where appropriate):
+```
+ln -s /run/media/sirprancelot/ /home/sirprancelot/Media/
+```
+- You shouldn't need to but in case of problems do try to install/reinstall the following:
+```
+sudo pacman -S polkit
+```
+- To manually unmount using udiskie simply type:
+```
+udiskie-umount -a
+```
+- This will remove all devices.  To mount manually all devices you can do by:
+```
+udiskie-mount -a
+```
 
 
 
