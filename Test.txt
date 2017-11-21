@@ -1,2 +1,10 @@
 ttnw.net
 twitch.tv
+googlevideo.com
+youtube.com
+aaplimg.com
+akamai.net
+googleusercontent.com
+i.ytimg.com
+ytimg.l.google.com
+akamaiedge.net
