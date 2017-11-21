@@ -8,3 +8,8 @@ googleusercontent.com
 i.ytimg.com
 ytimg.l.google.com
 akamaiedge.net
+googleapis.l.google.com 
+suggestqueries.l.google.com 
+mobile-gtalk.l.google.com 
+suggestqueries.google.com 
+device-provisioning.googleapis.com
